@@ -106,3 +106,31 @@ function table($t){
 table($personnes);
 table($scores);
 ?>
+
+<h1>Exercice 5 : Tableau à deux dimensions </h1>
+<?php
+
+$tabMagazines = [
+  'le monde'              => ['frequence' => 'quotidien', 'type' => 'actualité', 'prix' => 220],
+  'le point'              => ['frequence' => 'hebdo'    , 'type' => 'actualité', 'prix' => 80 ],
+  'causette'              => ['frequence' => 'mensuel'  , 'type' => 'féministe', 'prix' => 180],
+  'politis'               => ['frequence' => 'hebdo'    , 'type' => 'opinion'  , 'prix' => 100],
+  'le monde diplomatique' => ['frequence' => 'mensuel'  , 'type' => 'analyse'  , 'prix' => 60 ]
+];
+
+$tabMagazinesAbonne = ['le monde', 'le monde diplomatique'];
+$keys= array_keys($tabMagazines);
+sort($keys);
+echo implode(", ",$keys);
+
+echo "<ul>";
+foreach($tabMagazines as $c => $v){
+  echo "<li>$c (". implode(", ",$v).")</li>";
+}
+echo "</ul>";
+
+$prix=0;
+foreach($tabMagazinesAbonne as $v)
+  $prix+= $tabMagazines[$v]["prix"];
+echo "le prix total de son abonnement : ". $prix;
+?>
