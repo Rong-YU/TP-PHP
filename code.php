@@ -134,3 +134,59 @@ foreach($tabMagazinesAbonne as $v)
   $prix+= $tabMagazines[$v]["prix"];
 echo "le prix total de son abonnement : ". $prix;
 ?>
+
+<h1>Exercice 6 : Objets</h1>
+<?php
+include("TODOlist.php");
+$todo = new TODOlist();
+echo $todo->get_html();
+$todo->add_to_do("aa");
+$todo->add_to_do("bb");
+$todo->add_to_do("  ");
+$todo->add_to_do("");
+$todo->add_to_do("cc");
+$todo->add_to_do("dd");
+echo $todo->get_html();
+$todo->remove_to_do(3);
+echo $todo->get_html();
+?>
+
+<h1>Exercice 7 : Paramètres dans l'url</h1>
+<?php
+$found = false;
+if (isset($_GET['nom'])){
+  foreach ($personnes as $key => $value) {
+    if($key == $_GET['nom']){
+      echo "<p>".implode(", ",$value)."</p>";
+      $found = true;
+      break;
+    }
+  }
+  if(!$found){
+    echo "<p>Désolé, votre pseudonyme n'apparaît pas dans la liste. </p>";
+  }
+
+}
+
+ ?>
+<form action="code.php">
+<p>pseudo: <input name="pseudo" type="text" value=<?php if(isset($_GET['pseudo'])){echo $_GET['pseudo'];}else{echo "";}?> > </p>
+</form>
+</br>
+<form action="code.php">
+<p>pseudonyme: <input name="pseudonyme" type="text" > </p>
+<p>nom: <input name="nom" type="text" > </p>
+<p>prénom: <input name="prenom" type="text" > </p>
+<p>âge: <input name="age" type="text" > </p>
+<p>ville: <input name="ville" type="text" > </p>
+<input type="submit" value="Envoyer le formulaire">
+</form>
+
+<<?php
+if(isset($_GET["pseudonyme"]) and isset($_GET["nom"]) and isset($_GET["prenom"])
+    and isset($_GET["age"]) and isset($_GET["ville"])){
+  $personnes[$_GET["pseudonyme"]]= ['Prénom' => $_GET["prenom"], 'Nom' => $_GET["nom"],
+              'Age' => $_GET["age"], 'Ville' => $_GET["ville"]];
+}
+var_dump($personnes);
+ ?>
