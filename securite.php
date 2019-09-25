@@ -2,7 +2,7 @@
 session_start();
 
 var_dump($_SESSION['connecte']);
-$mdp="caq";
+$mdp="aaaa";
 if(!$_SESSION['connecte']){
   if(isset($_POST["mdp"]) and $_POST["mdp"] == $mdp){
     $_SESSION['connecte'] =true;

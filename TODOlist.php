@@ -53,6 +53,7 @@ class TODOlist {
       if(isset($chaine)){
         $task = explode('///', $chaine);
         foreach ($task as $value) {
+
           $this->add_to_do($value);
         }
       }
