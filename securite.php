@@ -1,21 +1,25 @@
 <?php
 session_start();
-$_SESSION['connecte'] =false;
+
+var_dump($_SESSION['connecte']);
 $mdp="caq";
-while(!$_SESSION['connecte']){
-  if(isset($_GET["mdp"]) and $_GET["mdp"] == $mdp){
+if(!$_SESSION['connecte']){
+  if(isset($_POST["mdp"]) and $_POST["mdp"] == $mdp){
     $_SESSION['connecte'] =true;
   }
   else{
     echo "
-    <form>
+    <form method='post'>
     <p>mot de passe: <input name='mdp' type='text'> </p>
     <input type='submit' value='Enter'>
     </form>
     ";
+    $_SESSION['connecte'] = false;
+    exit();
   }
 }
-exit;
-
-
- ?>
+if(isset($_GET['deconnexion'])){
+  #$_SESSION['connecte'] = false;
+  session_destroy();
+}
+?>

@@ -28,13 +28,33 @@ class TODOlist {
       if(!$this->is_empty()){
         $html = "<ul>";
         foreach ($this->to_dos as $key => $value) {
-          $html .= "<li>" . $value . "</li>";
+          $html .= "<li><a href='td1.php?rm=".$key."'>" . $value . "</a></li>";
         }
         $html .= "</ul>";
         return $html;
       }
       else{
         return "<p>Aucune tâche à faire !</p>";
+      }
+    }
+    function get_representation(){
+      if(!$this->is_empty()){
+        $chaine = "";
+        foreach ($this->to_dos as $key => $value) {
+          $chaine .= $value."///";
+        }
+        return $chaine;
+      }
+      else{
+        return "";
+      }
+    }
+    function set_representation($chaine){
+      if(isset($chaine)){
+        $task = explode('///', $chaine);
+        foreach ($task as $value) {
+          $this->add_to_do($value);
+        }
       }
     }
 

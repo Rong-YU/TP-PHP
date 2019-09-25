@@ -1,4 +1,6 @@
-<?php include("securite.php") ?>
+<?php include("securite.php");
+include("deco.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>

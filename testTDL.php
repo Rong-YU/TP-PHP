@@ -11,6 +11,9 @@ $todo->add_to_do("dd");
 echo $todo->get_html();
 $todo->remove_to_do(3);
 echo $todo->get_html();
+$todo1 = new TODOlist();
+$todo1->set_representation("qsdq///qsdqsda///azesq");
+echo $todo1->get_html();
 
 
  ?>>
