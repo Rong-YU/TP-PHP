@@ -40,5 +40,69 @@ class Model{
     $tab = $r->fetch(PDO::FETCH_ASSOC);
     return $tab['n'];
   }
+
+  public function get_categories(){
+    $r= $this->bd->prepare('Select distinct category from nobels');
+    $r->execute();
+    $tab = $r->fetchAll(PDO::FETCH_ASSOC);
+    return $tab;
+  }
+
+  public function add_nobel_prize($info){
+    $r= $this->bd->prepare('INSERT INTO nobels (year, category, name, birthdate, birthplace, county, motivation)
+                            VALUES(:year, :category, :name, :birthdate, :birthplace, :county, :motivation)');
+    $r->bindValue(':year', $info['Year']);
+    $r->bindValue(':category', $info['Category']);
+    $r->bindValue(':name', $info['Name']);
+    $r->bindValue(':birthdate', $info['Birthdate']);
+    $r->bindValue(':birthplace', $info['BirthPlace']);
+    $r->bindValue(':county', $info['County']);
+    $r->bindValue(':motivation', $info['Motivation']);
+    $r->execute();
+
+  }
+
+  public function check_data(){
+      if(!isset($_POST["Name"]) or preg_match('#^ +$#',$_POST["Name"])){
+        return false;
+      }
+      if(!isset($_POST["Category"]) or preg_match('#^ +$#',$_POST["Category"])){
+        return false;
+      }
+      if(!isset($_POST["Year"]) or !preg_match('#^\d+$#',$_POST["Year"])){
+        return false;
+      }
+      //Year, Category, Name, Birthdate, BirthPlace, County et Motivation
+      $info = [
+        "Name" => $_POST["Name"],
+        "Category" => $_POST["Category"],
+        "Year" => $_POST["Year"],
+      ];
+      if(isset($_POST["Birthdate"]) and preg_match('#^\d+$#',$_POST["Birthdate"]) ){
+        $info["Birthdate"] = $_POST["Birthdate"];
+      }
+      else{
+        $info["Birthdate"] = null;
+      }
+      if(!isset($_POST["BirthPlace"]) or preg_match('#^ +$#',$_POST["BirthPlace"])){
+        $info["BirthPlace"] = null;
+      }
+      else{
+        $info["Birthdate"] = $_POST["BirthPlace"];
+      }
+      if(!isset($_POST["County"]) or preg_match('#^ +$#',$_POST["County"])){
+        $info["County"] = null;
+      }
+      else{
+        $info["County"] = $_POST["County"];
+      }
+      if(!isset($_POST["Motivation"]) or preg_match('#^ +$#',$_POST["Motivation"])){
+        $info["Motivation"] = null;
+      }
+      else{
+        $info["Motivation"] = $_POST["Motivation"];
+      }
+      return $info;
+  }
 }
 ?>
