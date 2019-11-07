@@ -28,7 +28,7 @@ class Model{
   }
 
   public function get_last(){
-    $r= $this->bd->prepare('Select name, category, year from nobels where id> (select max(id)-25 from nobels) ORDER BY name, year DESC');
+    $r= $this->bd->prepare('Select id, name, category, year from nobels where id> (select max(id)-25 from nobels) ORDER BY name, year DESC');
     $r->execute();
     $tab = $r->fetchAll(PDO::FETCH_ASSOC);
     return $tab;
@@ -103,6 +103,35 @@ class Model{
         $info["Motivation"] = $_POST["Motivation"];
       }
       return $info;
+  }
+
+
+
+  public function is_in_data_base($id){
+    $r= $this->bd->prepare('Select * from nobels where id=:id');
+    $r->bindValue(':id', $id);
+    $r->execute();
+    $tab = $r->fetch(PDO::FETCH_ASSOC);
+    return !empty($tab);
+  }
+
+  public function get_nobel_prize_informations($id){
+    if($this->is_in_data_base($id)){
+      $r= $this->bd->prepare('Select * from nobels where id=:id');
+      $r->bindValue(':id', $id);
+      $r->execute();
+      $tab = $r->fetch(PDO::FETCH_ASSOC);
+      return $tab;
+    }
+    return false;
+  }
+
+  public function remove_nobel_prize($id){
+    if($this->is_in_data_base($id)){
+      $r= $this->bd->prepare('delete from nobels where id=:id');
+      $r->bindValue(':id', $id);
+      $r->execute();
+    }
   }
 }
 ?>
