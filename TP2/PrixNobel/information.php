@@ -1,4 +1,5 @@
 <?php
+require "begin.html";
 require_once "Model.php";
 $m = Model::getModel();
 if(isset($_GET["id"]) and preg_match('#^\d+#',$_GET["id"])){
@@ -14,5 +15,5 @@ if(isset($_GET["id"]) and preg_match('#^\d+#',$_GET["id"])){
   }
 
 }
-
+require "end.html";
  ?>

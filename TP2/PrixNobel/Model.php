@@ -63,45 +63,48 @@ class Model{
   }
 
   public function check_data(){
-      if(!isset($_POST["Name"]) or preg_match('#^ +$#',$_POST["Name"])){
+      var_dump($_POST);
+      if(!isset($_POST["name"]) or preg_match('#^ +$#',$_POST["name"])){
+        echo 'zz';
         return false;
       }
-      if(!isset($_POST["Category"]) or preg_match('#^ +$#',$_POST["Category"])){
+      if(!isset($_POST["category"]) or preg_match('#^ +$#',$_POST["category"])){
         return false;
       }
-      if(!isset($_POST["Year"]) or !preg_match('#^\d+$#',$_POST["Year"])){
+      if(!isset($_POST["year"]) or !preg_match('#^\d+$#',$_POST["year"])){
         return false;
       }
       //Year, Category, Name, Birthdate, BirthPlace, County et Motivation
       $info = [
-        "Name" => $_POST["Name"],
-        "Category" => $_POST["Category"],
-        "Year" => $_POST["Year"],
+        "name" => $_POST["name"],
+        "category" => $_POST["category"],
+        "year" => $_POST["year"],
       ];
-      if(isset($_POST["Birthdate"]) and preg_match('#^\d+$#',$_POST["Birthdate"]) ){
-        $info["Birthdate"] = $_POST["Birthdate"];
+      if(isset($_POST["birthdate"]) and preg_match('#^\d+$#',$_POST["birthdate"]) ){
+        $info["birthdate"] = $_POST["birthdate"];
       }
       else{
-        $info["Birthdate"] = null;
+        $info["birthdate"] = null;
       }
-      if(!isset($_POST["BirthPlace"]) or preg_match('#^ +$#',$_POST["BirthPlace"])){
-        $info["BirthPlace"] = null;
-      }
-      else{
-        $info["Birthdate"] = $_POST["BirthPlace"];
-      }
-      if(!isset($_POST["County"]) or preg_match('#^ +$#',$_POST["County"])){
-        $info["County"] = null;
+      if(!isset($_POST["birthPlace"]) or preg_match('#^ +$#',$_POST["birthPlace"])){
+        $info["birthPlace"] = null;
       }
       else{
-        $info["County"] = $_POST["County"];
+        $info["birthdate"] = $_POST["birthPlace"];
       }
-      if(!isset($_POST["Motivation"]) or preg_match('#^ +$#',$_POST["Motivation"])){
-        $info["Motivation"] = null;
+      if(!isset($_POST["county"]) or preg_match('#^ +$#',$_POST["county"])){
+        $info["county"] = null;
       }
       else{
-        $info["Motivation"] = $_POST["Motivation"];
+        $info["county"] = $_POST["county"];
       }
+      if(!isset($_POST["motivation"]) or preg_match('#^ +$#',$_POST["motivation"])){
+        $info["motivation"] = null;
+      }
+      else{
+        $info["motivation"] = $_POST["motivation"];
+      }
+
       return $info;
   }
 
@@ -132,6 +135,21 @@ class Model{
       $r->bindValue(':id', $id);
       $r->execute();
     }
+  }
+
+  public function update_nobel_prize($info){
+    $r= $this->bd->prepare('update nobels set year=:year, category=:category, name=:name, birthdate=:birthdate, birthplace=:birthplace, county=:county, motivation=:motivation
+                            where id=:id');
+    $r->bindValue(':year', $info['year']);
+    $r->bindValue(':category', $info['category']);
+    $r->bindValue(':name', $info['name']);
+    $r->bindValue(':birthdate', $info['birthdate']);
+    $r->bindValue(':birthplace', $info['birthPlace']);
+    $r->bindValue(':county', $info['county']);
+    $r->bindValue(':motivation', $info['motivation']);
+    $r->bindValue(':id', $_POST['id']);
+    $r->execute();
+
   }
 }
 ?>
