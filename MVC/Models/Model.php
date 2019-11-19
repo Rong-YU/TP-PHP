@@ -23,7 +23,7 @@ class Model
     {
 
         try {
-            include '../credentials.php';
+            include './credentials.php';
             $this->bd = new PDO($dsn, $login, $mdp);
             $this->bd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->bd->query("SET nameS 'utf8'");
@@ -354,7 +354,7 @@ class Model
     public function removeNobelPrize($id_np)
     {
         //On teste d'abord si le prix nobel existe => pourquoi ?
-        if (!$this->is_in_data_base($id_np)) {
+        if (!$this->isInDataBase($id_np)) {
             return false;
         }
 
