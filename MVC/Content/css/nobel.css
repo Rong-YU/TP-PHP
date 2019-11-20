@@ -86,10 +86,10 @@ main{
   main, header{ margin-left : 0px; }
 
   nav ul{
-    
+
       display: flex;
       justify-content: center;
-   
+
   }
   nav li {display: inline-block; margin: 2em;}
 }
